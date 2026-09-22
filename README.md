@@ -25,18 +25,18 @@ dotnet run --urls http://localhost:5050
 
 ## Endpoints
 
-| Método | Rota | Descrição |
-|---|---|---|
-| GET | / | Verifica se a API está funcionando |
-| GET | /api/musicas | Lista todas as músicas |
-| GET | /api/musicas/{id} | Busca uma música pelo ID |
-| POST | /api/musicas | Cadastra uma nova música |
-| PUT | /api/musicas/{id} | Atualiza uma música |
-| DELETE | /api/musicas/{id} | Remove uma música |
+| Método | Rota              | Descrição                          |
+| ------ | ----------------- | ---------------------------------- |
+| GET    | /                 | Verifica se a API está funcionando |
+| GET    | /api/musicas      | Lista todas as músicas             |
+| GET    | /api/musicas/{id} | Busca uma música pelo ID           |
+| POST   | /api/musicas      | Cadastra uma nova música           |
+| PUT    | /api/musicas/{id} | Atualiza uma música                |
+| DELETE | /api/musicas/{id} | Remove uma música                  |
 
 ## Exemplo de POST
 
-```json
+````json
 {
   "titulo": "Master of Puppets",
   "artista": "Metallica",
@@ -88,4 +88,5 @@ Por isso, quando a aplicação é encerrada, os dados cadastrados são perdidos.
 
 Link do vídeo da apresentação:
 
-COLOCAR LINK AQUI
+COLOCAR LINK AQUI: youtube.com/watch?is=0pRhvyBrdLKKzhCn&v=5ZbqNuw_UxQ&feature=youtu.be
+````

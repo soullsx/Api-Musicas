@@ -1,6 +1,10 @@
-using System.Reflection.Metadata;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ApiDbContext>(options =>
+    options.UseSqlite(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -105,3 +109,22 @@ record MusicaEntrada(
     string Genero,
     int Ano
 );
+class MusicaEntity
+{
+    public int Id { get; set; }
+    public string Titulo { get; set; } = string.Empty;
+    public string Artista { get; set; } = string.Empty;
+    public string Album { get; set; } = string.Empty;
+    public string Genero { get; set; } = string.Empty;
+    public int Ano { get; set; }
+}
+
+class ApiDbContext : DbContext
+{
+    public ApiDbContext(DbContextOptions<ApiDbContext> options)
+        : base(options)
+    {
+    }
+
+    public DbSet<MusicaEntity> Musicas => Set<MusicaEntity>();
+}

@@ -1,2 +1,9 @@
 bin/
 obj/
+.vs/
+.vscode/
+
+# banco SQLite local (é criado pelas migrations, não vai pro GitHub)
+*.db
+*.db-shm
+*.db-wal

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API de Músicas</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+    <header class="topo">
+        <div class="container">
+            <h1>API de Músicas</h1>
+            <p>Cadastro de músicas ligado à API (ASP.NET Core + EF Core + SQLite)</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Mostra a última requisição feita para a API e o status que voltou -->
+        <div id="status" class="status">Carregando...</div>
+
+        <section class="card">
+            <h2 id="tituloFormulario">Cadastrar música</h2>
+
+            <form id="formMusica">
+                <!-- Quando está editando, o id da música fica guardado aqui -->
+                <input type="hidden" id="musicaId">
+
+                <div class="campos">
+                    <label>
+                        Título
+                        <input type="text" id="titulo" required>
+                    </label>
+                    <label>
+                        Artista
+                        <input type="text" id="artista" required>
+                    </label>
+                    <label>
+                        Álbum
+                        <input type="text" id="album" required>
+                    </label>
+                    <label>
+                        Gênero
+                        <input type="text" id="genero" required>
+                    </label>
+                    <label>
+                        Ano
+                        <input type="number" id="ano" min="1900" max="2100" required>
+                    </label>
+                </div>
+
+                <div class="botoes">
+                    <button type="submit" id="btnSalvar" class="btn btn-principal">Cadastrar</button>
+                    <button type="button" id="btnCancelar" class="btn btn-secundario escondido">Cancelar edição</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="card">
+            <div class="cabecalho-lista">
+                <h2>Músicas cadastradas</h2>
+                <button type="button" id="btnRecarregar" class="btn btn-secundario">Recarregar lista</button>
+            </div>
+
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Título</th>
+                            <th>Artista</th>
+                            <th>Álbum</th>
+                            <th>Gênero</th>
+                            <th>Ano</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaMusicas"></tbody>
+                </table>
+            </div>
+
+            <p id="listaVazia" class="lista-vazia escondido">Nenhuma música cadastrada no banco ainda.</p>
+        </section>
+
+    </main>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

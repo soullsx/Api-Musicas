@@ -1,11 +1,11 @@
 info:
-  name: teste
+  name: 00 api no ar
   type: http
-  seq: 8
+  seq: 1
 
 http:
   method: GET
-  url: http://localhost:5050/api/musicas/3
+  url: http://localhost:5050/api
   auth: inherit
 
 settings:

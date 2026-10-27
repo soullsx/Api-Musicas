@@ -1,11 +1,11 @@
 info:
-  name: 03 cadastrar musica
+  name: 06 buscar musica excluida (404)
   type: http
-  seq: 5
+  seq: 7
 
 http:
   method: GET
-  url: ""
+  url: http://localhost:5050/api/musicas/1
   auth: inherit
 
 settings:

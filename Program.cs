@@ -1,22 +1,41 @@
-using System.Reflection.Metadata;
+using ApiMusicas.Data;
+using ApiMusicas.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Registra o DbContext usando SQLite (a connection string fica no appsettings.json)
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
 
-var musicas = new List<Musica>
+// Aplica as migrations ao iniciar: se o arquivo musicas.db não existir, ele é criado com a tabela
+using (var scope = app.Services.CreateScope())
 {
-    new Musica(1, "Sad But True", "Metallica", "Black Album", "Heavy Metal", 1991),
-    new Musica(2, "Numb", "Linkin Park", "Meteora", "Nu Metal", 2003)
-};
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
+// Serve o frontend (pasta wwwroot) na mesma origem da API
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 // Get Api
-app.MapGet("/", () => "API de Músicas está no ar!");
+app.MapGet("/api", () => "API de Músicas está no ar!");
+
 // Get Listar musicas
-app.MapGet("/api/musicas", () => musicas);
-// Get buscar musica
-app.MapGet("/api/musicas/{id}", (int id) =>
+app.MapGet("/api/musicas", async (AppDbContext db) =>
 {
-    var musica = musicas.FirstOrDefault(m => m.Id == id);
+    var musicas = await db.Musicas.ToListAsync();
+
+    return Results.Ok(musicas);
+});
+
+// Get buscar musica
+app.MapGet("/api/musicas/{id}", async (int id, AppDbContext db) =>
+{
+    var musica = await db.Musicas.FindAsync(id);
 
     if (musica == null)
     {
@@ -28,80 +47,60 @@ app.MapGet("/api/musicas/{id}", (int id) =>
 
 // Cadastrar
 
-app.MapPost("/api/musicas", (MusicaEntrada entrada) =>
+app.MapPost("/api/musicas", async (MusicaEntrada entrada, AppDbContext db) =>
 {
-    int novoId = musicas.Count + 1;
+    var novaMusica = new Musica
+    {
+        Titulo = entrada.Titulo,
+        Artista = entrada.Artista,
+        Album = entrada.Album,
+        Genero = entrada.Genero,
+        Ano = entrada.Ano
+    };
 
-    var novaMusica = new Musica(
-        novoId,
-        entrada.Titulo,
-        entrada.Artista,
-        entrada.Album,
-        entrada.Genero,
-        entrada.Ano
-    );
+    db.Musicas.Add(novaMusica);
+    await db.SaveChangesAsync(); // aqui grava no banco e o Id é gerado
 
-    musicas.Add(novaMusica);
-
-    return Results.Created($"/api/musicas/{novoId}", novaMusica);
+    return Results.Created($"/api/musicas/{novaMusica.Id}", novaMusica);
 });
 
 // Atualizar
 
-app.MapPut("/api/musicas/{id}", (int id, MusicaEntrada entrada) =>
+app.MapPut("/api/musicas/{id}", async (int id, MusicaEntrada entrada, AppDbContext db) =>
 {
-    var indice = musicas.FindIndex(m => m.Id == id);
+    var musica = await db.Musicas.FindAsync(id);
 
-    if (indice == -1)
+    if (musica == null)
     {
         return Results.NotFound();
     }
 
-    var musicaAtualizada = new Musica(
-        id,
-        entrada.Titulo,
-        entrada.Artista,
-        entrada.Album,
-        entrada.Genero,
-        entrada.Ano
-    );
+    musica.Titulo = entrada.Titulo;
+    musica.Artista = entrada.Artista;
+    musica.Album = entrada.Album;
+    musica.Genero = entrada.Genero;
+    musica.Ano = entrada.Ano;
 
-    musicas[indice] = musicaAtualizada;
+    await db.SaveChangesAsync();
 
-    return Results.Ok(musicaAtualizada);
+    return Results.Ok(musica);
 });
 
 // Deletar
 
-app.MapDelete("/api/musicas/{id}", (int id) =>
+app.MapDelete("/api/musicas/{id}", async (int id, AppDbContext db) =>
 {
-    var indice = musicas.FindIndex(m => m.Id == id);
+    var musica = await db.Musicas.FindAsync(id);
 
-    if (indice == -1)
+    if (musica == null)
     {
         return Results.NotFound();
     }
 
-    musicas.RemoveAt(indice);
+    db.Musicas.Remove(musica);
+    await db.SaveChangesAsync();
 
     return Results.NoContent();
 });
 
 app.Run();
-
-record Musica(
-    int Id,
-    string Titulo,
-    string Artista,
-    string Album,
-    string Genero,
-    int Ano
-);
-
-record MusicaEntrada(
-    string Titulo,
-    string Artista,
-    string Album,
-    string Genero,
-    int Ano
-);

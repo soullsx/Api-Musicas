@@ -1,0 +1,26 @@
+info:
+  name: 01 cadastrar musica
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: http://localhost:5050/api/musicas
+  body:
+    type: json
+    data: |-
+      {
+        "titulo": "Master of Puppets",
+        "artista": "Metallica",
+        "album": "Master of Puppets",
+        "genero": "Heavy Metal",
+        "ano": 1986
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

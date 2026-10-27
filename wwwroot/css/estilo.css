@@ -1,0 +1,207 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #f4f1ec;
+    color: #1f1d1a;
+    line-height: 1.5;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* Topo */
+
+.topo {
+    background-color: #1f1d1a;
+    color: #f4f1ec;
+    padding: 28px 0;
+    margin-bottom: 24px;
+    border-bottom: 4px solid #d9480f;
+}
+
+.topo h1 {
+    font-size: 28px;
+}
+
+.topo p {
+    color: #c9c2b8;
+    font-size: 14px;
+}
+
+/* Status da última requisição */
+
+.status {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    background-color: #e7e2da;
+    border-left: 4px solid #8a8378;
+}
+
+.status.sucesso {
+    background-color: #e3f1e5;
+    border-left-color: #2f8a3e;
+}
+
+.status.erro {
+    background-color: #fbe4e1;
+    border-left-color: #c0392b;
+}
+
+/* Cards */
+
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+/* Formulário */
+
+.campos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    font-weight: 600;
+    color: #5c564e;
+    gap: 4px;
+}
+
+input {
+    font-size: 15px;
+    padding: 9px 10px;
+    border: 1px solid #cfc8bd;
+    border-radius: 6px;
+    background-color: #fdfcfa;
+}
+
+input:focus {
+    outline: 2px solid #d9480f;
+    border-color: #d9480f;
+}
+
+.botoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+/* Botões */
+
+.btn {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 9px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-principal {
+    background-color: #d9480f;
+    color: #ffffff;
+}
+
+.btn-principal:hover {
+    background-color: #b83c0c;
+}
+
+.btn-secundario {
+    background-color: #e7e2da;
+    color: #1f1d1a;
+}
+
+.btn-secundario:hover {
+    background-color: #d8d1c6;
+}
+
+.btn-pequeno {
+    font-size: 13px;
+    padding: 5px 10px;
+}
+
+.btn-excluir {
+    background-color: #fbe4e1;
+    color: #a12a1e;
+}
+
+.btn-excluir:hover {
+    background-color: #f5cbc5;
+}
+
+/* Lista */
+
+.cabecalho-lista {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.cabecalho-lista h2 {
+    margin-bottom: 0;
+}
+
+.tabela-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+th {
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #8a8378;
+    padding: 8px 10px;
+    border-bottom: 2px solid #e7e2da;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #efebe5;
+}
+
+td.acoes {
+    display: flex;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.lista-vazia {
+    color: #8a8378;
+    padding: 12px 0;
+}
+
+.escondido {
+    display: none;
+}

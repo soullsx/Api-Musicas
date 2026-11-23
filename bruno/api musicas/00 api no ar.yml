@@ -5,8 +5,14 @@ info:
 
 http:
   method: GET
-  url: http://localhost:5050/api
+  url: "{{baseUrl}}/api"
   auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
 
 settings:
   encodeUrl: true

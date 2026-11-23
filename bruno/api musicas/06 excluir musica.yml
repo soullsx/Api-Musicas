@@ -1,12 +1,18 @@
 info:
-  name: 05 excluir musica
+  name: 06 excluir musica
   type: http
-  seq: 6
+  seq: 7
 
 http:
   method: DELETE
-  url: http://localhost:5050/api/musicas/1
+  url: "{{baseUrl}}/api/musicas/{{idCriado}}"
   auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "204"
 
 settings:
   encodeUrl: true

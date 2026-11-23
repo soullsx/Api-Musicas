@@ -1,12 +1,18 @@
-using ApiMusicas.Data;
-using ApiMusicas.Models;
+using ApiMusicas.Data;   // AppDbContext (pasta Data)
+using ApiMusicas.Dtos;   // MusicaEntrada (pasta Dtos)
+using ApiMusicas.Models; // Musica (pasta Models)
 using Microsoft.EntityFrameworkCore;
+
+// ===== 1. Inicialização e registro dos serviços =====
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Registra o DbContext usando SQLite (a connection string fica no appsettings.json)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Formato padrão de resposta de erro (usado pelo tratamento de exceções abaixo)
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
@@ -17,9 +23,21 @@ using (var scope = app.Services.CreateScope())
     db.Database.Migrate();
 }
 
+// ===== 2. Middleware =====
+
+// Tratamento de exceções: fora do ambiente de desenvolvimento, um erro inesperado
+// vira uma resposta 500 padronizada, sem mostrar detalhes internos do código.
+// Em desenvolvimento o próprio .NET mostra a página de erro detalhada.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler();
+}
+
 // Serve o frontend (pasta wwwroot) na mesma origem da API
 app.UseDefaultFiles();
 app.UseStaticFiles();
+
+// ===== 3. Rotas (endpoints) =====
 
 // Get Api
 app.MapGet("/api", () => "API de Músicas está no ar!");

@@ -1,0 +1,39 @@
+info:
+  name: 02 cadastrar musica
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/musicas"
+  body:
+    type: json
+    data: |-
+      {
+        "titulo": "Master of Puppets",
+        "artista": "Metallica",
+        "album": "Master of Puppets",
+        "genero": "Heavy Metal",
+        "ano": 1986
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        // guarda o id que a API devolveu no POST para usar nas próximas requisições
+        if (res.status === 201) {
+          bru.setVar("idCriado", res.body.id);
+        }
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

@@ -5,7 +5,7 @@ info:
 
 http:
   method: PUT
-  url: http://localhost:5050/api/musicas/1
+  url: "{{baseUrl}}/api/musicas/{{idCriado}}"
   body:
     type: json
     data: |-
@@ -17,6 +17,12 @@ http:
         "ano": 1986
       }
   auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
 
 settings:
   encodeUrl: true

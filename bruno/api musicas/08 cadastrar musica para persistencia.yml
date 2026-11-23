@@ -1,0 +1,39 @@
+info:
+  name: 08 cadastrar musica para persistencia
+  type: http
+  seq: 9
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/musicas"
+  body:
+    type: json
+    data: |-
+      {
+        "titulo": "Enter Sandman",
+        "artista": "Metallica",
+        "album": "Metallica",
+        "genero": "Heavy Metal",
+        "ano": 1991
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        // guarda o id que a API devolveu no POST para usar nas próximas requisições
+        if (res.status === 201) {
+          bru.setVar("idPersistencia", res.body.id);
+        }
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

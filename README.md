@@ -77,11 +77,11 @@ Api-Musicas/
 
 Cada tipo fica num arquivo próprio, na pasta da sua responsabilidade, com o namespace igual ao nome da pasta:
 
-| Arquivo | Namespace | Responsabilidade |
-| ------- | --------- | ---------------- |
-| `Models/Musica.cs` | `ApiMusicas.Models` | Entidade que vira a tabela `Musicas` |
-| `Dtos/MusicaEntrada.cs` | `ApiMusicas.Dtos` | Dados que o cliente envia (sem `Id`, que é gerado pelo banco) |
-| `Data/AppDbContext.cs` | `ApiMusicas.Data` | Ponte entre o código e o banco (`DbSet<Musica> Musicas`) |
+| Arquivo                 | Namespace           | Responsabilidade                                              |
+| ----------------------- | ------------------- | ------------------------------------------------------------- |
+| `Models/Musica.cs`      | `ApiMusicas.Models` | Entidade que vira a tabela `Musicas`                          |
+| `Dtos/MusicaEntrada.cs` | `ApiMusicas.Dtos`   | Dados que o cliente envia (sem `Id`, que é gerado pelo banco) |
+| `Data/AppDbContext.cs`  | `ApiMusicas.Data`   | Ponte entre o código e o banco (`DbSet<Musica> Musicas`)      |
 
 O `Program.cs` não tem mais a definição desses tipos. Ele só importa os namespaces no topo:
 
@@ -106,14 +106,14 @@ O `AppDbContext` também importa `ApiMusicas.Models` para conhecer a entidade `M
 
 ## Rotas da API
 
-| Método | Rota | Descrição | Respostas |
-| ------ | ---- | --------- | --------- |
-| GET | `/api` | Verifica se a API está no ar | 200 |
-| GET | `/api/musicas` | Lista todas as músicas | 200 |
-| GET | `/api/musicas/{id}` | Busca uma música pelo id | 200 / 404 |
-| POST | `/api/musicas` | Cadastra uma música | 201 / 400 |
-| PUT | `/api/musicas/{id}` | Atualiza uma música | 200 / 400 / 404 |
-| DELETE | `/api/musicas/{id}` | Exclui uma música | 204 / 404 |
+| Método | Rota                | Descrição                    | Respostas       |
+| ------ | ------------------- | ---------------------------- | --------------- |
+| GET    | `/api`              | Verifica se a API está no ar | 200             |
+| GET    | `/api/musicas`      | Lista todas as músicas       | 200             |
+| GET    | `/api/musicas/{id}` | Busca uma música pelo id     | 200 / 404       |
+| POST   | `/api/musicas`      | Cadastra uma música          | 201 / 400       |
+| PUT    | `/api/musicas/{id}` | Atualiza uma música          | 200 / 400 / 404 |
+| DELETE | `/api/musicas/{id}` | Exclui uma música            | 204 / 404       |
 
 > O `/` abre a interface (pasta `wwwroot`). Por isso a rota de status é `GET /api`.
 
@@ -164,18 +164,18 @@ A collection está em **`bruno/api musicas/`**.
 2. No canto superior direito, selecione o ambiente **local** (`baseUrl = http://localhost:5050`).
 3. Com a API rodando, execute as requisições na ordem:
 
-| Requisição | Método e rota | Esperado |
-| ---------- | ------------- | -------- |
-| `00 api no ar` | GET `/api` | 200 |
-| `01 listar musicas` | GET `/api/musicas` | 200 e a lista |
-| `02 cadastrar musica` | POST `/api/musicas` | 201 e o registro com id |
-| `03 buscar musica criada` | GET `/api/musicas/{{idCriado}}` | 200 e os mesmos dados |
-| `04 atualizar musica` | PUT `/api/musicas/{{idCriado}}` | 200 e os dados atualizados |
-| `05 conferir atualizacao` | GET `/api/musicas/{{idCriado}}` | 200 com os dados novos |
-| `06 excluir musica` | DELETE `/api/musicas/{{idCriado}}` | 204, sem corpo |
-| `07 buscar musica excluida (404)` | GET `/api/musicas/{{idCriado}}` | 404 |
-| `08 cadastrar musica para persistencia` | POST `/api/musicas` | 201 (esse registro não é excluído) |
-| `09 buscar depois de reiniciar a API` | GET `/api/musicas/{{idPersistencia}}` | 200 depois de reiniciar |
+| Requisição                              | Método e rota                         | Esperado                           |
+| --------------------------------------- | ------------------------------------- | ---------------------------------- |
+| `00 api no ar`                          | GET `/api`                            | 200                                |
+| `01 listar musicas`                     | GET `/api/musicas`                    | 200 e a lista                      |
+| `02 cadastrar musica`                   | POST `/api/musicas`                   | 201 e o registro com id            |
+| `03 buscar musica criada`               | GET `/api/musicas/{{idCriado}}`       | 200 e os mesmos dados              |
+| `04 atualizar musica`                   | PUT `/api/musicas/{{idCriado}}`       | 200 e os dados atualizados         |
+| `05 conferir atualizacao`               | GET `/api/musicas/{{idCriado}}`       | 200 com os dados novos             |
+| `06 excluir musica`                     | DELETE `/api/musicas/{{idCriado}}`    | 204, sem corpo                     |
+| `07 buscar musica excluida (404)`       | GET `/api/musicas/{{idCriado}}`       | 404                                |
+| `08 cadastrar musica para persistencia` | POST `/api/musicas`                   | 201 (esse registro não é excluído) |
+| `09 buscar depois de reiniciar a API`   | GET `/api/musicas/{{idPersistencia}}` | 200 depois de reiniciar            |
 
 As requisições não usam id fixo. O `02` e o `08` têm um script que guarda o `id` devolvido pelo POST nas variáveis `idCriado` e `idPersistencia`, e as requisições seguintes usam essas variáveis. Cada requisição tem uma asserção do status esperado.
 
@@ -187,7 +187,7 @@ Com a API rodando, abra `http://localhost:5050` no navegador. A tela é servida 
 
 ## Vídeo de demonstração — AS
 
-COLE_AQUI_O_LINK_DO_VIDEO_DA_AS
+https://youtu.be/c0oUo6ElPyg
 
 ## Vídeo de demonstração — AP2
 
